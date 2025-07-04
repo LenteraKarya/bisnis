@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Konsultasi Bisnis Jualan Kita - Panduan profesional untuk pengembangan UMKM di platform Jualan Kita">
     <meta name="keywords" content="jualan kita, konsultan bisnis, umkm, pemasaran digital, toko online">
-    <title>Konsultasi Bisnis Jualan Kita | Ahli Pengembangan UMKM Digital</title>
+    <title>Owner Jualan Kita | Ahli Pengembangan UMKM Digital</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" type="image/png">
@@ -59,6 +59,8 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .logo {
@@ -70,19 +72,45 @@
         }
 
         .logo img {
-            height: 60px;
-            margin-right: 1rem;
+            height: 80px;
+            margin-right: 1.5rem;
+            transition: var(--transition);
         }
 
-        .logo span {
-            font-size: 1.8rem;
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo-main {
+            font-size: 2.2rem;
             font-weight: 700;
+            line-height: 1.2;
+            text-align: left;
+            background: linear-gradient(to right, #fff, #f8d7b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-sub {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 0.3rem;
+            text-align: left;
         }
 
         .tagline {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
             opacity: 0.9;
+            line-height: 1.6;
         }
 
         /* Button Styles */
@@ -90,7 +118,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.8rem 1.8rem;
+            padding: 0.8rem 2rem;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
@@ -99,6 +127,7 @@
             cursor: pointer;
             gap: 0.5rem;
             margin: 0.5rem;
+            font-size: 1rem;
         }
 
         .btn-primary {
@@ -109,7 +138,7 @@
         .btn-primary:hover {
             background-color: #d35400;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .btn-outline {
@@ -121,6 +150,7 @@
         .btn-outline:hover {
             background-color: white;
             color: var(--dark);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         /* Navigation */
@@ -129,9 +159,10 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
             z-index: 1000;
+            transition: var(--transition);
         }
 
         .nav-container {
@@ -147,8 +178,18 @@
         }
 
         .nav-logo img {
-            height: 40px;
+            height: 45px;
             margin-right: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .nav-logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-logo span {
+            font-weight: 600;
+            color: var(--dark);
         }
 
         .mobile-menu-toggle {
@@ -158,28 +199,41 @@
             font-size: 1.5rem;
             color: var(--dark);
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-toggle:hover {
+            color: var(--primary);
         }
 
         /* About Consultant */
         .about-consultant {
-            padding: 4rem 0;
+            padding: 5rem 0;
             background-color: white;
+            position: relative;
         }
 
         .consultant-profile {
             display: flex;
             flex-wrap: wrap;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
             justify-content: center;
         }
 
         .consultant-image-container {
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            border: 5px solid white;
+        }
+
+        .consultant-image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
         }
 
         .consultant-image {
@@ -194,9 +248,10 @@
         }
 
         .consultant-name {
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 0.5rem;
             color: var(--dark);
+            line-height: 1.2;
         }
 
         .consultant-specialty {
@@ -204,42 +259,60 @@
             font-weight: 600;
             margin-bottom: 1.5rem;
             display: block;
+            font-size: 1.2rem;
         }
 
         .consultant-bio {
             margin-bottom: 2rem;
             color: var(--text);
+            font-size: 1.05rem;
+            line-height: 1.8;
         }
 
         .expertise-areas {
             background-color: var(--light);
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 12px;
+            border-left: 4px solid var(--primary);
         }
 
         .expertise-areas h4 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--dark);
+            font-size: 1.3rem;
         }
 
         .expertise-areas ul {
             list-style-position: inside;
+            padding-left: 0;
         }
 
         .expertise-areas li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+            list-style-type: none;
+        }
+
+        .expertise-areas li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
         }
 
         /* Services Section */
         .services {
-            padding: 4rem 0;
+            padding: 5rem 0;
             background-color: var(--light);
+            position: relative;
         }
 
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--dark);
             position: relative;
         }
@@ -250,55 +323,90 @@
             width: 80px;
             height: 4px;
             background-color: var(--accent);
-            margin: 1rem auto 0;
+            margin: 1.5rem auto 0;
+            border-radius: 2px;
         }
 
         .services-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .service-card {
             background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             transition: var(--transition);
             width: 100%;
-            max-width: 350px;
+            max-width: 370px;
+            position: relative;
+            overflow: hidden;
+            border-top: 3px solid var(--primary);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), #f39c12);
+            opacity: 0;
+            transition: var(--transition);
         }
 
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
         }
 
         .service-icon {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             background-color: rgba(230, 126, 34, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background-color: rgba(230, 126, 34, 0.2);
+            transform: scale(1.05);
         }
 
         .service-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
             color: var(--dark);
             text-align: center;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.7;
         }
 
         /* Jualan Kita Section */
         .jualan-kita {
-            padding: 4rem 0;
+            padding: 5rem 0;
             background-color: white;
+            position: relative;
         }
 
         .jk-content {
@@ -308,64 +416,108 @@
         }
 
         .jk-content p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
         }
 
         .jk-content ul {
             text-align: left;
             max-width: 600px;
-            margin: 1.5rem auto;
+            margin: 2rem auto;
             list-style-position: inside;
+            padding-left: 0;
         }
 
         .jk-content li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+            list-style-type: none;
+            line-height: 1.7;
+        }
+
+        .jk-content li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
         }
 
         /* Testimonials */
         .testimonials {
-            padding: 4rem 0;
+            padding: 5rem 0;
             background-color: var(--light);
+            position: relative;
         }
 
         .testimonial-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .testimonial-card {
             background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             width: 100%;
-            max-width: 350px;
+            max-width: 370px;
+            position: relative;
+            transition: var(--transition);
+            border-top: 3px solid rgba(230, 126, 34, 0.3);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-top-color: var(--primary);
         }
 
         .testimonial-text {
             font-style: italic;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             position: relative;
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            color: var(--primary);
+            font-size: 1.5rem;
+            opacity: 0.5;
         }
 
         .rating {
             color: gold;
             margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
         }
 
         .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.2rem;
         }
 
         .testimonial-avatar {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             overflow: hidden;
+            border: 3px solid rgba(230, 126, 34, 0.2);
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover .testimonial-avatar {
+            border-color: rgba(230, 126, 34, 0.5);
         }
 
         .testimonial-avatar img {
@@ -377,6 +529,7 @@
         .author-info h4 {
             font-weight: 600;
             margin-bottom: 0.3rem;
+            color: var(--dark);
         }
 
         .author-info p {
@@ -386,8 +539,9 @@
 
         /* Contact Section */
         .contact {
-            padding: 4rem 0;
+            padding: 5rem 0;
             background-color: white;
+            position: relative;
         }
 
         .contact-container {
@@ -399,28 +553,63 @@
 
         .contact-info, .contact-form {
             flex: 1;
-            min-width: 300px;
+            min-width: 350px;
             background: var(--light);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            border-top: 3px solid rgba(230, 126, 34, 0.3);
+        }
+
+        .contact-info:hover, .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-top-color: var(--primary);
         }
 
         .contact-info h3, .contact-form h3 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             color: var(--dark);
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .contact-info h3::after, .contact-form h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
         }
 
         .contact-detail {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+            align-items: flex-start;
         }
 
         .contact-icon {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--accent);
             margin-top: 0.3rem;
+            min-width: 25px;
+        }
+
+        .contact-text h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .contact-text p {
+            color: var(--text-light);
+            line-height: 1.7;
         }
 
         .form-group {
@@ -429,29 +618,42 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             font-weight: 500;
+            color: var(--dark);
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
         }
 
         .form-group textarea {
             min-height: 150px;
+            resize: vertical;
         }
 
         /* Footer */
         footer {
             background-color: var(--dark);
             color: white;
-            padding: 4rem 0 0;
+            padding: 5rem 0 0;
+            position: relative;
         }
 
         .footer-container {
@@ -472,17 +674,69 @@
         .footer-logo {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
 
         .footer-logo img {
-            height: 40px;
-            margin-right: 0.8rem;
+            height: 45px;
+            margin-right: 1rem;
+            transition: var(--transition);
+        }
+
+        .footer-logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .footer-logo span {
+            font-weight: 600;
+            font-size: 1.2rem;
         }
 
         .footer-about p {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
             color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.8rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
         }
 
         .footer-links {
@@ -490,29 +744,106 @@
         }
 
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-links li i {
+            color: var(--primary);
+            font-size: 0.9rem;
         }
 
         .footer-links a {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             transition: var(--transition);
+            font-size: 0.95rem;
         }
 
         .footer-links a:hover {
             color: white;
+            padding-left: 5px;
         }
 
         .copyright {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem;
             margin-top: 3rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
         }
 
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+            z-index: 100;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 20px rgba(230, 126, 34, 0.3);
+            z-index: 99;
+            transition: var(--transition);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.4);
+        }
+
         /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .logo-main {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .mobile-menu-toggle {
                 display: block;
@@ -526,6 +857,16 @@
                 padding: 80px 20px;
             }
 
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-text {
+                align-items: center;
+                margin-top: 1rem;
+            }
+
             .section-title {
                 font-size: 1.8rem;
             }
@@ -533,27 +874,100 @@
             .consultant-profile {
                 flex-direction: column;
                 text-align: center;
+                gap: 2.5rem;
+            }
+
+            .consultant-details {
+                text-align: left;
             }
 
             .expertise-areas ul {
                 list-style-position: inside;
                 text-align: left;
             }
+            
+            .footer-col {
+                min-width: 100%;
+                text-align: center;
+            }
+            
+            .footer-links {
+                text-align: center;
+                display: inline-block;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
         }
 
-        @media (max-width: 480px) {
-            .logo span {
-                font-size: 1.5rem;
+        @media (max-width: 576px) {
+            .logo-main {
+                font-size: 1.6rem;
             }
-
+            
+            .logo img {
+                height: 60px;
+                margin-right: 0;
+            }
+            
             .tagline {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
             .btn {
                 width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .consultant-name {
+                font-size: 1.8rem;
+            }
+            
+            .service-card, .testimonial-card {
+                padding: 1.8rem;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+                bottom: 80px;
+                right: 20px;
             }
         }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
@@ -562,7 +976,7 @@
         <div class="nav-container">
             <a href="#" class="nav-logo">
                 <img src="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" alt="Jualan Kita Logo">
-                <span>Konsultasi Bisnis</span>
+                <span>Owner Jualan Kita</span>
             </a>
             
             <button class="mobile-menu-toggle" id="mobileMenuToggle">
@@ -576,16 +990,19 @@
         <div class="header-content">
             <div class="logo">
                 <img src="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" alt="Jualan Kita Logo">
-                <span>Konsultasi Bisnis</span>
+                <div class="logo-text">
+                    <span class="logo-main">Owner Jualan Kita</span>
+                    <span class="logo-sub">Konsultasi Bisnis Profesional</span>
+                </div>
             </div>
-            <p class="tagline">Panduan Profesional untuk Pengembangan UMKM di Platform Jualan Kita</p>
+            <p class="tagline fade-in">Panduan Profesional untuk Pengembangan UMKM di Platform Jualan Kita. Bersama kita wujudkan mimpi bisnis Anda dengan strategi yang tepat dan terukur.</p>
             
-            <div class="header-buttons">
+            <div class="header-buttons fade-in delay-1">
                 <a href="#services" class="btn btn-primary">
                     <i class="fas fa-lightbulb"></i> Layanan Kami
                 </a>
                 <a href="#contact" class="btn btn-outline">
-                    <i class="fas fa-envelope"></i> Hubungi Kami
+                    <i class="fas fa-phone-alt"></i> Konsultasi Sekarang
                 </a>
             </div>
         </div>
@@ -594,25 +1011,31 @@
     <!-- About Consultant -->
     <section class="about-consultant" id="about">
         <div class="container">
-            <h2 class="section-title">Tentang Konsultan</h2>
+            <h2 class="section-title fade-in">Tentang Owner</h2>
             <div class="consultant-profile">
-                <div class="consultant-image-container">
-                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Konsultan Jualan Kita">
+                <div class="consultant-image-container fade-in">
+                    <img src="https://raw.githubusercontent.com/LenteraKarya/bisnis/main/assets/images/foto-owner.jpeg" alt="Owner Jualan Kita">
                 </div>
-                <div class="consultant-details">
+                <div class="consultant-details fade-in delay-1">
                     <h3 class="consultant-name">Nama Anda</h3>
-                    <span class="consultant-specialty">Konsultan Ahli Jualan Kita</span>
+                    <span class="consultant-specialty">Founder & CEO Jualan Kita</span>
                     <p class="consultant-bio">
-                        Dengan pengalaman lebih dari 5 tahun membantu UMKM berkembang di platform Jualan Kita, saya telah membantu lebih dari 100 bisnis meningkatkan penjualan mereka. Spesialisasi saya meliputi strategi pemasaran digital, optimasi produk, dan pengembangan bisnis berkelanjutan.
+                        Saya adalah seorang putra daerah kelahiran Situbondo, lulusan SMK IBRAHIMY SITUBONDO, yang kini berusia 36 tahun dan berprofesi sebagai tenaga honorer. Meski berlatar belakang pendidikan sederhana, saya memiliki mimpi besar: menjadi pengusaha yang tumbuh dari nol dan memberi manfaat seluas-luasnya bagi masyarakat.
+                        <br><br>
+                        Berangkat dari visi tersebut, saya membangun Lentera Karya —sebuah platform digital yang dirancang sebagai wadah promosi, publikasi, dan jaringan bisnis bagi para pelaku UMKM, khususnya di Situbondo. Platform ini bukan hanya untuk usaha saya sendiri, tetapi terbuka bagi semua pengusaha kecil dan menengah yang ingin berkembang bersama.
+                        <br><br>
+                        Saya terinspirasi oleh semangat dan slogan kepemimpinan Bupati Situbondo saat ini, Mas Rio: "Situbondo Naik Kelas." Inilah yang menjadi bahan bakar visi saya—mendorong UMKM lokal agar mampu naik kelas dan bersaing secara sehat dalam ekosistem digital yang inklusif dan berdaya saing.
+                        <br><br>
+                        Saya percaya bahwa perubahan besar selalu dimulai dari langkah sederhana. Lentera Karya adalah langkah awal saya menuju cita-cita besar itu, dan saya berharap platform ini akan menjadi ruang kolaboratif yang mendukung pertumbuhan UMKM dari akar rumput hingga tingkat nasional.
                     </p>
-                    <div class="expertise-areas">
+                    <div class="expertise-areas fade-in delay-2">
                         <h4>Bidang Keahlian Khusus:</h4>
                         <ul>
                             <li>Setup dan optimasi toko Jualan Kita</li>
-                            <li>Strategi pricing dan promosi</li>
-                            <li>Peningkatan konversi penjualan</li>
-                            <li>Manajemen katalog produk</li>
-                            <li>Analisis kompetitor</li>
+                            <li>Strategi pricing dan promosi efektif</li>
+                            <li>Peningkatan konversi penjualan online</li>
+                            <li>Manajemen katalog produk profesional</li>
+                            <li>Analisis kompetitor dan pasar digital</li>
                         </ul>
                     </div>
                 </div>
@@ -623,28 +1046,28 @@
     <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
-            <h2 class="section-title">Layanan Konsultasi</h2>
+            <h2 class="section-title fade-in">Layanan Konsultasi</h2>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card fade-in">
                     <div class="service-icon">
                         <i class="fas fa-store"></i>
                     </div>
                     <h3 class="service-title">Setup Toko Profesional</h3>
-                    <p>Bimbingan lengkap mulai dari pendaftaran, setup toko, hingga pengaturan pembayaran dan pengiriman di platform Jualan Kita.</p>
+                    <p>Bimbingan lengkap mulai dari pendaftaran, setup toko, hingga pengaturan pembayaran dan pengiriman di platform Jualan Kita untuk memastikan toko Anda tampil profesional sejak awal.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card fade-in delay-1">
                     <div class="service-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3 class="service-title">Strategi Penjualan</h3>
-                    <p>Teknik meningkatkan penjualan melalui optimasi produk, pricing strategy, dan promosi efektif di Jualan Kita.</p>
+                    <p>Teknik meningkatkan penjualan melalui optimasi produk, pricing strategy yang kompetitif, dan promosi efektif di Jualan Kita untuk memaksimalkan keuntungan bisnis Anda.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card fade-in delay-2">
                     <div class="service-icon">
                         <i class="fas fa-camera-retro"></i>
                     </div>
                     <h3 class="service-title">Optimasi Produk</h3>
-                    <p>Panduan fotografi produk, penulisan deskripsi yang menjual, dan pengaturan katalog yang optimal.</p>
+                    <p>Panduan fotografi produk profesional, penulisan deskripsi yang menjual, dan pengaturan katalog yang optimal untuk meningkatkan daya tarik produk Anda di Jualan Kita.</p>
                 </div>
             </div>
         </div>
@@ -653,19 +1076,20 @@
     <!-- Jualan Kita Section -->
     <section class="jualan-kita" id="jualankita">
         <div class="container">
-            <h2 class="section-title">Tentang Jualan Kita</h2>
+            <h2 class="section-title fade-in">Tentang Jualan Kita</h2>
             <div class="jk-content">
-                <p>Jualan Kita adalah platform e-commerce yang dirancang khusus untuk UMKM Indonesia dengan fitur-fitur lengkap untuk memulai dan mengembangkan bisnis online.</p>
+                <p class="fade-in">Jualan Kita adalah platform e-commerce yang dirancang khusus untuk UMKM Indonesia dengan fitur-fitur lengkap untuk memulai dan mengembangkan bisnis online dengan mudah dan efektif.</p>
                 
-                <p>Sebagai konsultan ahli Jualan Kita, saya dapat membantu Anda:</p>
-                <ul>
-                    <li>Memahami semua fitur dan keunggulan platform Jualan Kita</li>
-                    <li>Mengoptimalkan penggunaan platform untuk bisnis Anda</li>
-                    <li>Mengembangkan strategi penjualan khusus untuk produk Anda</li>
-                    <li>Menganalisis performa toko dan memberikan rekomendasi perbaikan</li>
+                <p class="fade-in delay-1">Sebagai owner dan konsultan ahli Jualan Kita, saya dapat membantu Anda:</p>
+                <ul class="fade-in delay-2">
+                    <li>Memahami semua fitur dan keunggulan platform Jualan Kita secara mendalam</li>
+                    <li>Mengoptimalkan penggunaan platform untuk bisnis Anda dengan strategi khusus</li>
+                    <li>Mengembangkan strategi penjualan yang disesuaikan dengan produk dan target pasar Anda</li>
+                    <li>Menganalisis performa toko dan memberikan rekomendasi perbaikan berbasis data</li>
+                    <li>Membangun branding yang kuat untuk produk Anda di platform Jualan Kita</li>
                 </ul>
                 
-                <a href="https://lenterakarya.github.io/jualan-kita/" class="btn btn-primary" target="_blank">
+                <a href="https://lenterakarya.github.io/jualan-kita/" class="btn btn-primary fade-in delay-3" target="_blank">
                     <i class="fas fa-external-link-alt"></i> Kunjungi Website Jualan Kita
                 </a>
             </div>
@@ -675,11 +1099,11 @@
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
         <div class="container">
-            <h2 class="section-title">Apa Kata Klien Kami</h2>
+            <h2 class="section-title fade-in">Testimoni Klien</h2>
             <div class="testimonial-grid">
-                <div class="testimonial-card">
+                <div class="testimonial-card fade-in">
                     <p class="testimonial-text">
-                        "Berhasil meningkatkan penjualan di Jualan Kita hingga 300% dalam 3 bulan berkat strategi dari konsultan. Sangat recommended!"
+                        "Sebagai pemula di Jualan Kita, bimbingan dari Owner sangat membantu. Toko saya yang awalnya sepi sekarang bisa mencapai 50 pesanan per minggu. Strategi pricing dan promosinya benar-benar efektif!"
                     </p>
                     <div class="rating">★★★★★</div>
                     <div class="testimonial-author">
@@ -688,14 +1112,14 @@
                         </div>
                         <div class="author-info">
                             <h4>Siti Rahma</h4>
-                            <p>Pemilik Toko Kerajinan</p>
+                            <p>Pemilik Kedai Kue Tradisional</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
+                <div class="testimonial-card fade-in delay-1">
                     <p class="testimonial-text">
-                        "Konsultan sangat memahami platform Jualan Kita. Toko saya yang awalnya sepi sekarang ramai pembeli."
+                        "Pelatihan optimasi produk dari Owner Jualan Kita sangat detail. Foto produk saya sekarang terlihat profesional dan konversi penjualan meningkat 2x lipat dalam sebulan. Recommended banget!"
                     </p>
                     <div class="rating">★★★★★</div>
                     <div class="testimonial-author">
@@ -704,14 +1128,14 @@
                         </div>
                         <div class="author-info">
                             <h4>Budi Santoso</h4>
-                            <p>Pemilik Toko Makanan</p>
+                            <p>Pengrajin Kerajinan Tangan</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
+                <div class="testimonial-card fade-in delay-2">
                     <p class="testimonial-text">
-                        "Penjelasannya sangat detail dan mudah dipahami. Sekarang saya bisa mengelola toko Jualan Kita dengan percaya diri."
+                        "Saya sangat terkesan dengan pengetahuan mendalam Owner tentang platform Jualan Kita. Berkat strateginya, omzet toko saya naik 300% dalam 3 bulan. Kini saya bisa fokus mengembangkan bisnis."
                     </p>
                     <div class="rating">★★★★★</div>
                     <div class="testimonial-author">
@@ -720,7 +1144,7 @@
                         </div>
                         <div class="author-info">
                             <h4>Dewi Lestari</h4>
-                            <p>Pemilik Butik Fashion</p>
+                            <p>Pemilik Brand Fashion Lokal</p>
                         </div>
                     </div>
                 </div>
@@ -731,9 +1155,9 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title">Hubungi Kami</h2>
+            <h2 class="section-title fade-in">Hubungi Kami</h2>
             <div class="contact-container">
-                <div class="contact-info">
+                <div class="contact-info fade-in">
                     <h3>Informasi Kontak</h3>
                     <div class="contact-detail">
                         <i class="fas fa-map-marker-alt contact-icon"></i>
@@ -745,7 +1169,7 @@
                     <div class="contact-detail">
                         <i class="fas fa-phone-alt contact-icon"></i>
                         <div class="contact-text">
-                            <h4>Telepon</h4>
+                            <h4>Telepon/WhatsApp</h4>
                             <p>+62 878 6561 4222</p>
                         </div>
                     </div>
@@ -764,29 +1188,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="contact-form">
+                <div class="contact-form fade-in delay-1">
                     <h3>Kirim Pesan</h3>
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Nama Lengkap</label>
-                            <input type="text" id="name" required>
+                            <input type="text" id="name" required placeholder="Masukkan nama lengkap Anda">
                         </div>
                         <div class="form-group">
                             <label for="email">Alamat Email</label>
-                            <input type="email" id="email" required>
+                            <input type="email" id="email" required placeholder="Masukkan alamat email aktif">
                         </div>
                         <div class="form-group">
                             <label for="subject">Subjek</label>
                             <select id="subject" required>
-                                <option value="" disabled selected>Pilih subjek</option>
+                                <option value="" disabled selected>Pilih subjek pesan Anda</option>
                                 <option value="konsultasi">Konsultasi Bisnis</option>
                                 <option value="jualankita">Pertanyaan Jualan Kita</option>
+                                <option value="pelatihan">Pelatihan & Workshop</option>
                                 <option value="lainnya">Lainnya</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="message">Pesan Anda</label>
-                            <textarea id="message" required></textarea>
+                            <textarea id="message" required placeholder="Tulis pesan Anda secara detail"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-paper-plane"></i> Kirim Pesan
@@ -801,48 +1226,68 @@
     <footer>
         <div class="container">
             <div class="footer-container">
-                <div class="footer-col footer-about">
+                <div class="footer-col footer-about fade-in">
                     <div class="footer-logo">
                         <img src="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" alt="Jualan Kita Logo">
-                        <span>Konsultasi Bisnis</span>
+                        <span>Owner Jualan Kita</span>
                     </div>
-                    <p>Layanan konsultasi profesional untuk membantu UMKM berkembang di platform Jualan Kita dengan strategi yang terukur dan efektif.</p>
+                    <p>Layanan konsultasi profesional untuk membantu UMKM berkembang di platform Jualan Kita dengan strategi yang terukur dan efektif, langsung dari pemilik platform.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
                 
-                <div class="footer-col">
+                <div class="footer-col fade-in delay-1">
                     <h3>Layanan</h3>
                     <ul class="footer-links">
-                        <li><a href="#services">Setup Toko</a></li>
-                        <li><a href="#services">Strategi Penjualan</a></li>
-                        <li><a href="#services">Optimasi Produk</a></li>
-                        <li><a href="#jualankita">Pelatihan Jualan Kita</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#services">Setup Toko Profesional</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#services">Strategi Penjualan</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#services">Optimasi Produk</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#jualankita">Pelatihan Jualan Kita</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#contact">Konsultasi Privat</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-col">
+                <div class="footer-col fade-in delay-1">
                     <h3>Tautan Cepat</h3>
                     <ul class="footer-links">
-                        <li><a href="#home">Beranda</a></li>
-                        <li><a href="#about">Tentang Kami</a></li>
-                        <li><a href="#testimonials">Testimoni</a></li>
-                        <li><a href="#contact">Kontak</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#home">Beranda</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#about">Tentang Owner</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#services">Layanan</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#testimonials">Testimoni</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#contact">Kontak</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-col">
+                <div class="footer-col fade-in delay-2">
                     <h3>Hubungi Kami</h3>
                     <ul class="footer-links">
                         <li><i class="fas fa-phone"></i> +62 878 6561 4222</li>
                         <li><i class="fas fa-envelope"></i> konsultasi@lenterakarya.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Situbondo, Jawa Timur</li>
+                        <li><i class="fas fa-clock"></i> Senin-Sabtu, 08.00-17.00</li>
                     </ul>
                 </div>
             </div>
             
-            <div class="copyright">
-                &copy; 2025 Konsultasi Bisnis Jualan Kita. Semua hak dilindungi.
+            <div class="copyright fade-in delay-3">
+                &copy; 2025 Owner Jualan Kita. Semua hak dilindungi. | Dibangun dengan <i class="fas fa-heart" style="color: #e74c3c;"></i> untuk UMKM Indonesia
             </div>
         </div>
     </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/6287865614222" class="whatsapp-float" target="_blank" aria-label="Chat via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <script>
         // Mobile Menu Toggle
@@ -872,19 +1317,107 @@
         // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.');
-            this.reset();
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Terkirim!';
+                
+                // Show success message
+                const successAlert = document.createElement('div');
+                successAlert.style.position = 'fixed';
+                successAlert.style.top = '20px';
+                successAlert.style.right = '20px';
+                successAlert.style.backgroundColor = '#38a169';
+                successAlert.style.color = 'white';
+                successAlert.style.padding = '15px 25px';
+                successAlert.style.borderRadius = '8px';
+                successAlert.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                successAlert.style.zIndex = '1000';
+                successAlert.style.animation = 'fadeIn 0.5s ease';
+                successAlert.innerHTML = '<i class="fas fa-check-circle"></i> Pesan Anda telah terkirim! Kami akan segera menghubungi Anda.';
+                
+                document.body.appendChild(successAlert);
+                
+                // Remove alert after 5 seconds
+                setTimeout(() => {
+                    successAlert.style.animation = 'fadeOut 0.5s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(successAlert);
+                    }, 500);
+                }, 5000);
+                
+                // Reset form after 2 seconds
+                setTimeout(() => {
+                    this.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            }, 1500);
         });
 
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 100) {
-                nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                nav.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
             } else {
+                nav.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
                 nav.style.boxShadow = 'none';
             }
+            
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
         });
+
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Initialize animations
+        window.addEventListener('load', function() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            });
+            
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
     </script>
 </body>
 </html>
