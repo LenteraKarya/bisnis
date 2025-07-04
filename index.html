@@ -1,1 +1,2271 @@
-.
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+    <meta name="description" content="Konsultasi Bisnis Lentera Karya - Platform profesional untuk konsultan bisnis dan pelaku UMKM. Solusi pengembangan bisnis terpadu dengan ahli bersertifikat.">
+    <meta name="keywords" content="konsultasi bisnis, konsultan UMKM, pengembangan bisnis, strategi pemasaran, analisis keuangan, lentera karya, mentor bisnis">
+    <meta name="author" content="Lentera Karya">
+    <meta property="og:title" content="Konsultasi Bisnis Lentera Karya | Ahli Pengembangan UMKM">
+    <meta property="og:description" content="Temukan solusi bisnis terbaik dengan konsultan bersertifikat. Bergabung sebagai member atau konsultan profesional.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lenterakarya.com/konsultasi">
+    <meta property="og:image" content="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png">
+    <title>Konsultasi Bisnis Lentera Karya | Ahli Pengembangan UMKM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" type="image/png">
+    <style>
+        /* [Semua CSS dari file asli tetap dipertahankan] */
+        /* Saya akan menambahkan beberapa style khusus untuk fitur konsultasi */
+        
+        /* Konsultan Card Styles */
+        .consultant-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        
+        .consultant-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            border-color: rgba(230, 126, 34, 0.1);
+        }
+        
+        .consultant-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 1;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .consultant-image-container {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .consultant-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .consultant-card:hover .consultant-image {
+            transform: scale(1.05);
+        }
+        
+        .consultant-details {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .consultant-rating {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .consultant-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .consultant-specialty {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .consultant-bio {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .consultant-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            color: var(--dark);
+            display: block;
+            font-size: 1.1rem;
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+        
+        /* Konsultasi Modal */
+        .consultation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .consultation-modal.show {
+            opacity: 1;
+            display: flex;
+        }
+        
+        .consultation-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            padding: 3rem;
+            position: relative;
+            animation: modalFadeIn 0.5s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .consultation-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+        
+        .consultation-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            flex-shrink: 0;
+        }
+        
+        .consultation-info h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .consultation-specialty {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .consultation-rating {
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .consultation-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 2rem;
+        }
+        
+        .consultation-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .consultation-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .package-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+        
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: rgba(230, 126, 34, 0.1);
+        }
+        
+        .package-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .package-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+        
+        .package-price {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        
+        .package-duration {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .package-features {
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .feature-item i {
+            color: var(--accent);
+            margin-top: 0.2rem;
+        }
+        
+        /* Membership Section */
+        .membership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .membership-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .membership-card.popular::before {
+            content: 'POPULER';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 0.3rem 3rem;
+            transform: rotate(45deg);
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+        
+        .membership-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .membership-type {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .membership-price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .membership-price span {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+        
+        .membership-features {
+            margin-bottom: 2.5rem;
+            text-align: left;
+        }
+        
+        .membership-feature {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .membership-feature i {
+            color: var(--accent);
+        }
+        
+        /* Calendar Booking */
+        .booking-calendar {
+            margin-bottom: 2rem;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .calendar-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .calendar-nav button {
+            background: var(--light);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-nav button:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--dark);
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+            border: 1px solid #eee;
+        }
+        
+        .calendar-day:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .calendar-day.disabled {
+            color: #ccc;
+            background: #f9f9f9;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.selected {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .calendar-day.today {
+            border: 2px solid var(--accent);
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+        
+        .time-slot {
+            padding: 0.8rem;
+            text-align: center;
+            border-radius: 8px;
+            background: white;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .time-slot:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .time-slot.selected {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .time-slot.booked {
+            background: #f9f9f9;
+            color: #ccc;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+        
+        /* Chat Interface */
+        .chat-container {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 1rem;
+            background: var(--light);
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #fcfcfc;
+        }
+        
+        .message {
+            margin-bottom: 1.5rem;
+            max-width: 80%;
+        }
+        
+        .message.received {
+            align-self: flex-start;
+        }
+        
+        .message.sent {
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: 1rem;
+            border-radius: 12px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .message.received .message-content {
+            background: white;
+            border: 1px solid #eee;
+            border-top-left-radius: 0;
+        }
+        
+        .message.sent .message-content {
+            background: var(--accent);
+            color: white;
+            border-top-right-radius: 0;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+            display: block;
+            text-align: right;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            background: white;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #eee;
+            border-radius: 50px;
+            margin-right: 1rem;
+        }
+        
+        .chat-input button {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .chat-input button:hover {
+            background: var(--dark);
+        }
+        
+        /* Dashboard Styles */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+        
+        .dashboard-sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .user-profile {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            margin: 0 auto 1rem;
+        }
+        
+        .user-name {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            font-size: 1.2rem;
+        }
+        
+        .user-role {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .menu-item {
+            margin-bottom: 0.8rem;
+        }
+        
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .menu-item a:hover, .menu-item a.active {
+            background: rgba(230, 126, 34, 0.1);
+            color: var(--accent);
+        }
+        
+        .menu-item a i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .dashboard-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-title {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .stat-change.up {
+            color: var(--success);
+        }
+        
+        .stat-change.down {
+            color: #e53e3e;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .consultation-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .consultant-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .consultation-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .membership-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .consultation-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .consultation-tab {
+                flex: 1;
+                text-align: center;
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .calendar-grid {
+                gap: 0.3rem;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-spinner"></div>
+        <h2 style="color: white; font-family: 'Playfair Display', serif; margin-top: 1.5rem;">Konsultasi Bisnis</h2>
+    </div>
+    
+    <!-- Background Music - Autoplay and Loop -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="https://github.com/LenteraKarya/jualan-kita/blob/main/assets/audio/Musik%20website.mp3?raw=true" type="audio/mpeg">
+    </audio>
+    
+    <!-- Partikel Animasi -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Header Modern -->
+    <header id="home">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <div class="logo">
+                <img src="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" alt="Lentera Karya Logo">
+                <span>Konsultasi Bisnis</span>
+            </div>
+            <p class="tagline">Solusi Profesional untuk Pengembangan UMKM Anda</p>
+            
+            <!-- Search Bar in Header -->
+            <div class="header-search">
+                <input type="text" id="headerSearchInput" placeholder="Cari konsultan atau topik...">
+                <button id="headerSearchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="header-buttons">
+                <a href="#consultants" class="btn btn-primary">
+                    <i class="fas fa-users"></i> Temukan Konsultan
+                </a>
+                <a href="#membership" class="btn btn-outline">
+                    <i class="fas fa-crown"></i> Jadi Member
+                </a>
+            </div>
+            <a href="#services" class="scroll-down">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" alt="Lentera Karya Logo">
+                <span>Konsultasi Bisnis</span>
+            </a>
+            
+            <!-- Nav Search (Hidden on mobile) -->
+            <div class="nav-search" id="navSearch">
+                <input type="text" placeholder="Cari konsultan atau topik...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            
+            <button class="search-toggle" id="searchToggle">
+                <i class="fas fa-search"></i>
+            </button>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Beranda</a>
+                <a href="#services">Layanan</a>
+                <a href="#consultants">Konsultan</a>
+                <a href="#membership">Membership</a>
+                <a href="#testimonials">Testimoni</a>
+                <a href="#contact">Kontak</a>
+                <a href="#" class="btn btn-accent btn-small" id="loginBtn">Masuk</a>
+                <a href="#" class="btn btn-primary btn-small" id="registerBtn">Daftar</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <h2 class="section-title">Layanan Konsultasi Kami</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">Strategi Bisnis</h3>
+                    <p>Pengembangan rencana bisnis komprehensif, analisis pasar, dan strategi pertumbuhan untuk UMKM dengan pendekatan terukur.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <h3 class="service-title">Pemasaran Digital</h3>
+                    <p>Konsultasi pemasaran online meliputi media sosial, SEO, konten marketing, dan iklan digital untuk meningkatkan penjualan.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="service-title">Keuangan & Investasi</h3>
+                    <p>Analisis keuangan, pengelolaan arus kas, perencanaan pajak, dan strategi investasi untuk stabilitas bisnis jangka panjang.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="service-title">SDM & Organisasi</h3>
+                    <p>Pengembangan struktur organisasi, rekrutmen, pelatihan, dan sistem penggajian untuk efisiensi operasional.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="service-title">Teknologi Bisnis</h3>
+                    <p>Implementasi sistem teknologi informasi, otomatisasi proses, dan solusi digital untuk meningkatkan produktivitas bisnis.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3 class="service-title">Ekspansi Pasar</h3>
+                    <p>Strategi penetrasi pasar baru, ekspor-impor, dan pengembangan jaringan distribusi untuk perluasan bisnis.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Consultants Section -->
+        <section class="consultants" id="consultants">
+            <h2 class="section-title">Konsultan Profesional Kami</h2>
+            <div class="gallery-intro">
+                <p>Temukan konsultan bisnis bersertifikat dengan pengalaman luas di berbagai bidang. Setiap konsultan telah melalui proses seleksi ketat oleh tim Lentera Karya.</p>
+                
+                <div class="category-tabs">
+                    <button class="category-btn active" data-category="all">Semua</button>
+                    <button class="category-btn" data-category="strategy">Strategi Bisnis</button>
+                    <button class="category-btn" data-category="marketing">Pemasaran</button>
+                    <button class="category-btn" data-category="finance">Keuangan</button>
+                    <button class="category-btn" data-category="hr">SDM</button>
+                    <button class="category-btn" data-category="tech">Teknologi</button>
+                </div>
+            </div>
+            
+            <div class="gallery-grid" id="consultantGrid">
+                <!-- CONSULTANT 1 -->
+                <div class="consultant-card" data-category="strategy">
+                    <span class="consultant-badge">Bersertifikat</span>
+                    <div class="consultant-image-container">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Dian Pertiwi" class="consultant-image lazy" loading="lazy">
+                    </div>
+                    <div class="consultant-details">
+                        <div class="consultant-rating">
+                            <i class="fas fa-star"></i> 4.9 (128 review)
+                        </div>
+                        <h3 class="consultant-name">Dian Pertiwi, S.E., M.M.</h3>
+                        <span class="consultant-specialty">Strategi Bisnis & Ekspansi Pasar</span>
+                        <p class="consultant-bio">Konsultan bisnis dengan pengalaman 15+ tahun membantu UMKM berkembang. Spesialisasi dalam pengembangan model bisnis dan strategi ekspansi pasar domestik maupun internasional.</p>
+                        
+                        <div class="consultant-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">500+</span>
+                                <span class="stat-label">Klien</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">95%</span>
+                                <span class="stat-label">Kepuasan</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">IDR 1.2jt</span>
+                                <span class="stat-label">/sesi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-outline btn-small view-profile" data-consultant="1">Profil Lengkap</button>
+                            <button class="btn btn-primary btn-small book-consultant" data-consultant="1">Konsultasi Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONSULTANT 2 -->
+                <div class="consultant-card" data-category="marketing">
+                    <span class="consultant-badge">Bersertifikat</span>
+                    <div class="consultant-image-container">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rizky Maulana" class="consultant-image lazy" loading="lazy">
+                    </div>
+                    <div class="consultant-details">
+                        <div class="consultant-rating">
+                            <i class="fas fa-star"></i> 4.8 (95 review)
+                        </div>
+                        <h3 class="consultant-name">Rizky Maulana, S.I.Kom.</h3>
+                        <span class="consultant-specialty">Pemasaran Digital & Branding</span>
+                        <p class="consultant-bio">Ahli pemasaran digital dengan spesialisasi dalam strategi konten, SEO, dan kampanye media sosial. Telah membantu 300+ merek meningkatkan penjualan online mereka.</p>
+                        
+                        <div class="consultant-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">300+</span>
+                                <span class="stat-label">Klien</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">92%</span>
+                                <span class="stat-label">Kepuasan</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">IDR 850k</span>
+                                <span class="stat-label">/sesi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-outline btn-small view-profile" data-consultant="2">Profil Lengkap</button>
+                            <button class="btn btn-primary btn-small book-consultant" data-consultant="2">Konsultasi Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONSULTANT 3 -->
+                <div class="consultant-card" data-category="finance">
+                    <span class="consultant-badge">Bersertifikat</span>
+                    <div class="consultant-image-container">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Linda Wijaya" class="consultant-image lazy" loading="lazy">
+                    </div>
+                    <div class="consultant-details">
+                        <div class="consultant-rating">
+                            <i class="fas fa-star"></i> 4.9 (76 review)
+                        </div>
+                        <h3 class="consultant-name">Linda Wijaya, S.Ak., M.Ak.</h3>
+                        <span class="consultant-specialty">Keuangan & Perpajakan</span>
+                        <p class="consultant-bio">Akuntan profesional dengan pengalaman 12 tahun di bidang keuangan UMKM. Spesialisasi dalam analisis laporan keuangan, perencanaan pajak, dan pengelolaan arus kas.</p>
+                        
+                        <div class="consultant-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">400+</span>
+                                <span class="stat-label">Klien</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">97%</span>
+                                <span class="stat-label">Kepuasan</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">IDR 1jt</span>
+                                <span class="stat-label">/sesi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-outline btn-small view-profile" data-consultant="3">Profil Lengkap</button>
+                            <button class="btn btn-primary btn-small book-consultant" data-consultant="3">Konsultasi Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONSULTANT 4 -->
+                <div class="consultant-card" data-category="hr">
+                    <span class="consultant-badge">Bersertifikat</span>
+                    <div class="consultant-image-container">
+                        <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Budi Santoso" class="consultant-image lazy" loading="lazy">
+                    </div>
+                    <div class="consultant-details">
+                        <div class="consultant-rating">
+                            <i class="fas fa-star"></i> 4.7 (68 review)
+                        </div>
+                        <h3 class="consultant-name">Budi Santoso, S.Psi., M.M.</h3>
+                        <span class="consultant-specialty">SDM & Pengembangan Organisasi</span>
+                        <p class="consultant-bio">Konsultan SDM dengan pengalaman membangun tim yang solid untuk berbagai skala bisnis. Ahli dalam rekrutmen, pelatihan, dan pengembangan budaya perusahaan.</p>
+                        
+                        <div class="consultant-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">250+</span>
+                                <span class="stat-label">Klien</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">90%</span>
+                                <span class="stat-label">Kepuasan</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">IDR 950k</span>
+                                <span class="stat-label">/sesi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-outline btn-small view-profile" data-consultant="4">Profil Lengkap</button>
+                            <button class="btn btn-primary btn-small book-consultant" data-consultant="4">Konsultasi Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONSULTANT 5 -->
+                <div class="consultant-card" data-category="tech">
+                    <span class="consultant-badge">Bersertifikat</span>
+                    <div class="consultant-image-container">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Anita Rahayu" class="consultant-image lazy" loading="lazy">
+                    </div>
+                    <div class="consultant-details">
+                        <div class="consultant-rating">
+                            <i class="fas fa-star"></i> 4.8 (52 review)
+                        </div>
+                        <h3 class="consultant-name">Anita Rahayu, S.Kom., M.T.I.</h3>
+                        <span class="consultant-specialty">Teknologi Bisnis & Digitalisasi</span>
+                        <p class="consultant-bio">Pakar transformasi digital dengan spesialisasi dalam implementasi sistem ERP, e-commerce, dan otomatisasi proses bisnis untuk meningkatkan efisiensi operasional.</p>
+                        
+                        <div class="consultant-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">180+</span>
+                                <span class="stat-label">Klien</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">94%</span>
+                                <span class="stat-label">Kepuasan</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">IDR 1.5jt</span>
+                                <span class="stat-label">/sesi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-outline btn-small view-profile" data-consultant="5">Profil Lengkap</button>
+                            <button class="btn btn-primary btn-small book-consultant" data-consultant="5">Konsultasi Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONSULTANT 6 -->
+                <div class="consultant-card" data-category="strategy,marketing">
+                    <span class="consultant-badge">Bersertifikat</span>
+                    <div class="consultant-image-container">
+                        <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Hendra Kurniawan" class="consultant-image lazy" loading="lazy">
+                    </div>
+                    <div class="consultant-details">
+                        <div class="consultant-rating">
+                            <i class="fas fa-star"></i> 4.9 (112 review)
+                        </div>
+                        <h3 class="consultant-name">Hendra Kurniawan, S.E., M.B.A.</h3>
+                        <span class="consultant-specialty">Startup & Bisnis Kreatif</span>
+                        <p class="consultant-bio">Konsultan bisnis kreatif dengan fokus pada startup dan bisnis berbasis inovasi. Pendiri 3 startup sukses dan mentor di berbagai program akselerator bisnis.</p>
+                        
+                        <div class="consultant-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">350+</span>
+                                <span class="stat-label">Klien</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">96%</span>
+                                <span class="stat-label">Kepuasan</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">IDR 1.8jt</span>
+                                <span class="stat-label">/sesi</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-outline btn-small view-profile" data-consultant="6">Profil Lengkap</button>
+                            <button class="btn btn-primary btn-small book-consultant" data-consultant="6">Konsultasi Sekarang</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Membership Section -->
+        <section class="membership" id="membership">
+            <h2 class="section-title">Paket Membership</h2>
+            <div class="gallery-intro">
+                <p>Nikmati berbagai keuntungan dengan menjadi member premium kami. Pilih paket yang sesuai dengan kebutuhan bisnis Anda.</p>
+            </div>
+            
+            <div class="membership-grid">
+                <div class="membership-card">
+                    <h3 class="membership-type">Basic</h3>
+                    <div class="membership-price">Rp 299.000 <span>/bulan</span></div>
+                    
+                    <div class="membership-features">
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>2 Sesi Konsultasi 1-on-1</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Akses Webinar Bulanan</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Template Dokumen Bisnis</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Diskon 10% Sesi Tambahan</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-times"></i>
+                            <span>Prioritas Booking</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-times"></i>
+                            <span>Grup Mastermind Eksklusif</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-outline">Pilih Paket</button>
+                </div>
+                
+                <div class="membership-card popular">
+                    <h3 class="membership-type">Professional</h3>
+                    <div class="membership-price">Rp 699.000 <span>/bulan</span></div>
+                    
+                    <div class="membership-features">
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>5 Sesi Konsultasi 1-on-1</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Akses Webinar & Workshop</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Template & Tools Bisnis Lengkap</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Diskon 20% Sesi Tambahan</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Prioritas Booking 24 Jam</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Akses Grup Mastermind</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Pilih Paket</button>
+                </div>
+                
+                <div class="membership-card">
+                    <h3 class="membership-type">Enterprise</h3>
+                    <div class="membership-price">Rp 1.499.000 <span>/bulan</span></div>
+                    
+                    <div class="membership-features">
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>10 Sesi Konsultasi 1-on-1</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Akses Semua Webinar & Workshop</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Tools Bisnis Premium</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Diskon 30% Sesi Tambahan</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Prioritas Booking 24/7</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Grup Mastermind & Konsultasi Privat</span>
+                        </div>
+                        <div class="membership-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Analisis Bisnis Komprehensif</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-outline">Pilih Paket</button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <p>Ingin menjadi konsultan di platform kami? <a href="#contact" style="color: var(--accent); font-weight: 600;">Daftar sebagai Konsultan</a></p>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials">
+            <h2 class="section-title">Apa Kata Klien Kami</h2>
+            <div class="testimonial-content">
+                <div class="testimonial-grid">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Berhasil meningkatkan omzet bisnis kuliner saya hingga 300% dalam 6 bulan berkat strategi pemasaran digital dari konsultan Lentera Karya. Sangat recommended!"
+                        </p>
+                        <div class="rating">★★★★★</div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Siti Rahma">
+                            </div>
+                            <div class="author-info">
+                                <h4>Siti Rahma</h4>
+                                <p>Pemilik Warung Makan "Sederhana"</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Sebagai startup, kami sangat terbantu dengan konsultasi keuangan yang diberikan. Sistem pengelolaan keuangan kami sekarang jauh lebih rapi dan terukur."
+                        </p>
+                        <div class="rating">★★★★★</div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Andi Wijaya">
+                            </div>
+                            <div class="author-info">
+                                <h4>Andi Wijaya</h4>
+                                <p>Co-Founder Startup Teknologi</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Konsultan SDM membantu kami membangun sistem rekrutmen dan penggajian yang profesional. Sekarang tim lebih solid dan produktif."
+                        </p>
+                        <div class="rating">★★★★★</div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Dewi Lestari">
+                            </div>
+                            <div class="author-info">
+                                <h4>Dewi Lestari</h4>
+                                <p>Pemilik Boutique "Dewi Fashion"</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Paket membership professional sangat worth it! Saya bisa konsultasi berbagai aspek bisnis dengan biaya lebih terjangkau."
+                        </p>
+                        <div class="rating">★★★★★</div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Bambang Setiawan">
+                            </div>
+                            <div class="author-info">
+                                <h4>Bambang Setiawan</h4>
+                                <p>Pemilik UKM Kerajinan Kayu</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Implementasi sistem POS yang direkomendasikan konsultan teknologi membuat operasional toko lebih efisien dan mengurangi kesalahan administrasi."
+                        </p>
+                        <div class="rating">★★★★★</div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Ratna Dewi">
+                            </div>
+                            <div class="author-info">
+                                <h4>Ratna Dewi</h4>
+                                <p>Pemilik Toko Kelontong</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 6 -->
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">
+                            "Dalam 3 bulan, strategi ekspor yang diberikan konsultan berhasil membuka pasar ke 2 negara baru. Pendapatan bisnis meningkat signifikan."
+                        </p>
+                        <div class="rating">★★★★★</div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Haryanto">
+                            </div>
+                            <div class="author-info">
+                                <h4>Haryanto</h4>
+                                <p>Produsen Makanan Ringan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <h2 class="section-title">Hubungi Kami</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <div class="contact-text">
+                            <h4>Alamat</h4>
+                            <p>Jl. PB Sudirman, Desa Wringin Anom<br>Kec. Panarukan, Kab. Situbondo (68351)<br>Provinsi Jawa Timur</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone-alt contact-icon"></i>
+                        <div class="contact-text">
+                            <h4>Telepon</h4>
+                            <p>+62 878 6561 4222</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p>konsultasi@lenterakarya.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-clock contact-icon"></i>
+                        <div class="contact-text">
+                            <h4>Jam Operasional</h4>
+                            <p>Senin - Jumat: 08.00 - 17.00<br>Sabtu: 09.00 - 15.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Kirim Pesan</h3>
+                    <div id="formStatus" class="form-status" style="display: none;"></div>
+                    <form id="contactForm" action="https://formsubmit.co/konsultasi@lenterakarya.com" method="POST">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="https://lenterakarya.com/thank-you">
+                        <input type="hidden" name="_template" value="table">
+                        <div class="form-group">
+                            <label for="name">Nama Anda</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Alamat Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subjek</label>
+                            <select id="subject" name="subject" required>
+                                <option value="" disabled selected>Pilih subjek</option>
+                                <option value="general">Pertanyaan Umum</option>
+                                <option value="consultation">Konsultasi Bisnis</option>
+                                <option value="membership">Keanggotaan</option>
+                                <option value="consultant">Daftar sebagai Konsultan</option>
+                                <option value="other">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Floating Contact Buttons -->
+    <div class="contact-bar">
+        <a href="https://wa.me/6287865614222" class="contact-btn whatsapp" target="_blank" aria-label="Hubungi via WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+6287865614222" class="contact-btn phone" aria-label="Telepon Kami">
+            <i class="fas fa-phone"></i>
+        </a>
+        <button class="contact-btn order" id="quick-consultation" aria-label="Konsultasi Cepat">
+            <i class="fas fa-headset"></i>
+        </button>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col footer-about">
+                <div class="footer-logo">
+                    <img src="https://raw.githubusercontent.com/LenteraKarya/jualan-kita/main/assets/images/logo-jualan-kita.png" alt="Lentera Karya Logo">
+                    <span>Konsultasi Bisnis</span>
+                </div>
+                <p>Platform konsultasi bisnis profesional untuk UMKM dan pelaku usaha. Menghubungkan Anda dengan konsultan bersertifikat untuk solusi pengembangan bisnis terbaik.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Tautan Cepat</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#services">Layanan</a></li>
+                    <li><a href="#consultants">Konsultan</a></li>
+                    <li><a href="#membership">Membership</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Layanan</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Strategi Bisnis</a></li>
+                    <li><a href="#">Pemasaran Digital</a></li>
+                    <li><a href="#">Konsultasi Keuangan</a></li>
+                    <li><a href="#">Pengembangan SDM</a></li>
+                    <li><a href="#">Teknologi Bisnis</a></li>
+                    <li><a href="#">Ekspansi Pasar</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Berlangganan newsletter kami untuk mendapatkan tips bisnis terbaru dan penawaran spesial.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Alamat email Anda" required>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i> Berlangganan
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2025 Lentera Karya. Semua hak dilindungi. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
+        </div>
+    </footer>
+    
+    <!-- Consultation Modal -->
+    <div class="consultation-modal" id="consultationModal">
+        <div class="consultation-content">
+            <span class="close-modal">&times;</span>
+            
+            <div class="consultation-header">
+                <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Dian Pertiwi" class="consultation-avatar" id="consultantAvatar">
+                <div class="consultation-info">
+                    <h3 id="consultantModalName">Dian Pertiwi, S.E., M.M.</h3>
+                    <span class="consultation-specialty" id="consultantModalSpecialty">Strategi Bisnis & Ekspansi Pasar</span>
+                    <div class="consultation-rating">
+                        <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> 
+                        <span id="consultantModalRating">4.9 (128 review)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="consultation-tabs">
+                <div class="consultation-tab active" data-tab="packages">Paket Konsultasi</div>
+                <div class="consultation-tab" data-tab="schedule">Jadwal & Booking</div>
+                <div class="consultation-tab" data-tab="profile">Profil Lengkap</div>
+                <div class="consultation-tab" data-tab="reviews">Ulasan</div>
+            </div>
+            
+            <div class="tab-content active" id="packages-tab">
+                <div class="package-card">
+                    <div class="package-header">
+                        <h4 class="package-title">Konsultasi Dasar</h4>
+                        <span class="package-price">Rp 500.000</span>
+                    </div>
+                    <p class="package-duration">1 Sesi (60 menit)</p>
+                    <div class="package-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Analisis awal kebutuhan bisnis</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Rekomendasi strategi dasar</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>1x follow-up email</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-small book-package" data-package="basic">Pilih Paket</button>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-header">
+                        <h4 class="package-title">Konsultasi Premium</h4>
+                        <span class="package-price">Rp 1.200.000</span>
+                    </div>
+                    <p class="package-duration">3 Sesi (60 menit/sesi)</p>
+                    <div class="package-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Analisis komprehensif</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Rencana aksi terperinci</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Template dokumen bisnis</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>3x follow-up email</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>1x review dokumen</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-small book-package" data-package="premium">Pilih Paket</button>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-header">
+                        <h4 class="package-title">Konsultasi Enterprise</h4>
+                        <span class="package-price">Rp 2.500.000</span>
+                    </div>
+                    <p class="package-duration">6 Sesi + Pendampingan</p>
+                    <div class="package-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Analisis bisnis mendalam</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Rencana strategis 6 bulan</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Tools & template premium</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Unlimited follow-up email</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>3x review dokumen</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Pendampingan 2 minggu</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-small book-package" data-package="enterprise">Pilih Paket</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="schedule-tab">
+                <div class="booking-calendar">
+                    <div class="calendar-header">
+                        <h4 class="calendar-title">Januari 2025</h4>
+                        <div class="calendar-nav">
+                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Min</div>
+                        <div class="calendar-day-header">Sen</div>
+                        <div class="calendar-day-header">Sel</div>
+                        <div class="calendar-day-header">Rab</div>
+                        <div class="calendar-day-header">Kam</div>
+                        <div class="calendar-day-header">Jum</div>
+                        <div class="calendar-day-header">Sab</div>
+                        
+                        <!-- Calendar days will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="time-slots" id="timeSlots">
+                        <!-- Time slots will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label for="consultationNotes">Catatan Khusus (Opsional)</label>
+                    <textarea id="consultationNotes" placeholder="Jelaskan secara singkat kebutuhan spesifik Anda..."></textarea>
+                </div>
+                
+                <button class="btn btn-primary" id="confirmBooking">Konfirmasi Booking</button>
+            </div>
+            
+            <div class="tab-content" id="profile-tab">
+                <h4>Tentang Konsultan</h4>
+                <p id="consultantBio">Konsultan bisnis dengan pengalaman 15+ tahun membantu UMKM berkembang. Spesialisasi dalam pengembangan model bisnis dan strategi ekspansi pasar domestik maupun internasional. Memiliki sertifikasi dari Asosiasi Konsultan Bisnis Indonesia dan pernah membantu 500+ klien dari berbagai sektor industri.</p>
+                
+                <h4 style="margin-top: 2rem;">Pendidikan & Sertifikasi</h4>
+                <ul id="consultantEducation" style="margin-bottom: 2rem;">
+                    <li>Magister Manajemen, Universitas Indonesia (2010)</li>
+                    <li>Sarjana Ekonomi, Universitas Gadjah Mada (2006)</li>
+                    <li>Sertifikasi Konsultan Bisnis, AKBI (2012)</li>
+                    <li>Sertifikasi Digital Marketing, Google (2015)</li>
+                </ul>
+                
+                <h4>Pengalaman Kerja</h4>
+                <ul id="consultantExperience">
+                    <li>Senior Business Consultant, PT Solusi Bisnis Indonesia (2015-sekarang)</li>
+                    <li>Business Development Manager, PT Retail Group (2010-2015)</li>
+                    <li>Marketing Executive, PT FMCG Nasional (2006-2010)</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="reviews-tab">
+                <div class="review-item" style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee;">
+                    <div class="review-header" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>
+                            <strong>Budi Santoso</strong>
+                            <div class="rating" style="display: inline-block; margin-left: 1rem;">★★★★★</div>
+                        </div>
+                        <span style="color: var(--text-light); font-size: 0.9rem;">2 minggu lalu</span>
+                    </div>
+                    <p>Strategi pemasaran yang diberikan sangat tepat untuk bisnis kuliner saya. Dalam 3 bulan, omset meningkat 40%. Terima kasih!</p>
+                </div>
+                
+                <div class="review-item" style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee;">
+                    <div class="review-header" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>
+                            <strong>Siti Aminah</strong>
+                            <div class="rating" style="display: inline-block; margin-left: 1rem;">★★★★★</div>
+                        </div>
+                        <span style="color: var(--text-light); font-size: 0.9rem;">1 bulan lalu</span>
+                    </div>
+                    <p>Konsultasi keuangan membantu saya mengatur arus kas dengan lebih baik. Sekarang bisnis lebih stabil dan terencana.</p>
+                </div>
+                
+                <div class="review-item" style="margin-bottom: 2rem;">
+                    <div class="review-header" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>
+                            <strong>Andi Kurniawan</strong>
+                            <div class="rating" style="display: inline-block; margin-left: 1rem;">★★★★☆</div>
+                        </div>
+                        <span style="color: var(--text-light); font-size: 0.9rem;">2 bulan lalu</span>
+                    </div>
+                    <p>Analisis pasar yang diberikan sangat membantu, meskipun implementasinya membutuhkan penyesuaian lebih lanjut.</p>
+                </div>
+                
+                <button class="btn btn-outline">Lihat Semua Ulasan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Masuk ke Akun Anda</h2>
+            
+            <div id="loginStatus" class="form-status" style="display: none;"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Alamat Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Kata Sandi</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe" style="display: inline; margin-left: 0.5rem;">Ingat saya</label>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <p>Belum punya akun? <a href="#" id="showRegister" style="color: var(--accent); font-weight: 600;">Daftar sekarang</a></p>
+                <p><a href="#" style="color: var(--accent);">Lupa kata sandi?</a></p>
+            </div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <p style="margin-bottom: 1rem; color: var(--text-light);">Atau masuk dengan</p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <button class="btn btn-outline" style="padding: 0.8rem; width: 50px; height: 50px;">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="btn btn-outline" style="padding: 0.8rem; width: 50px; height: 50px;">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Daftar Akun Baru</h2>
+            
+            <div id="registerStatus" class="form-status" style="display: none;"></div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Nama Lengkap</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Alamat Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Nomor Telepon</label>
+                    <input type="tel" id="registerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Kata Sandi</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Konfirmasi Kata Sandi</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerType">Saya ingin mendaftar sebagai:</label>
+                    <select id="registerType" required>
+                        <option value="" disabled selected>Pilih tipe akun</option>
+                        <option value="client">Klien (Mencari Konsultan)</option>
+                        <option value="consultant">Konsultan (Memberikan Layanan)</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms" style="display: inline; margin-left: 0.5rem;">Saya menyetujui <a href="#" style="color: var(--accent);">Syarat & Ketentuan</a></label>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <p>Sudah punya akun? <a href="#" id="showLogin" style="color: var(--accent); font-weight: 600;">Masuk sekarang</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard Modal -->
+    <div class="modal" id="dashboardModal">
+        <div class="modal-content" style="max-width: 1000px; padding: 0;">
+            <span class="close-modal">&times;</span>
+            <div class="dashboard-container">
+                <div class="dashboard-sidebar">
+                    <div class="user-profile">
+                        <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="User Avatar" class="user-avatar">
+                        <h3 class="user-name">Ahmad Fauzi</h3>
+                        <span class="user-role">Member Professional</span>
+                        <div class="rating">★★★★★</div>
+                    </div>
+                    
+                    <ul class="sidebar-menu">
+                        <li class="menu-item">
+                            <a href="#" class="active" data-tab="dashboard">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" data-tab="consultations">
+                                <i class="fas fa-calendar-check"></i>
+                                <span>Konsultasi Saya</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" data-tab="messages">
+                                <i class="fas fa-envelope"></i>
+                                <span>Pesan</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" data-tab="resources">
+                                <i class="fas fa-book"></i>
+                                <span>Resources</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" data-tab="profile">
+                                <i class="fas fa-user"></i>
+                                <span>Profil Saya</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" data-tab="settings">
+                                <i class="fas fa-cog"></i>
+                                <span>Pengaturan</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Keluar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dashboard-content">
+                    <div class="tab-content active" id="dashboard-tab">
+                        <h2 style="margin-bottom: 1.5rem;">Dashboard</h2>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-title">Sesi Konsultasi</div>
+                                <div class="stat-value">12</div>
+                                <div class="stat-change up">
+                                    <i class="fas fa-arrow-up"></i> 3 dari bulan lalu
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Konsultan Aktif</div>
+                                <div class="stat-value">4</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Sisa Kuota</div>
+                                <div class="stat-value">3/5</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Member Hingga</div>
+                                <div class="stat-value">15 Mar 2025</div>
+                                <div class="stat-change">
+                                    <a href="#" style="color: var(--accent);">Perpanjang</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin: 2rem 0 1rem;">Konsultasi Mendatang</h3>
+                        <div style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #eee;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <div>
+                                    <strong>Strategi Pemasaran Produk Baru</strong>
+                                    <div style="font-size: 0.9rem; color: var(--text-light);">Dengan Dian Pertiwi</div>
+                                </div>
+                                <span style="background: rgba(56, 161, 105, 0.1); color: var(--success); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600;">Besok, 10:00 WIB</span>
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button class="btn btn-outline btn-small">
+                                    <i class="fas fa-video"></i> Join Meeting
+                                </button>
+                                <button class="btn btn-outline btn-small">
+                                    <i class="fas fa-calendar-alt"></i> Tambah ke Kalender
+                                </button>
+                                <button class="btn btn-outline btn-small">
+                                    <i class="fas fa-times"></i> Batalkan
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin: 2rem 0 1rem;">Rekomendasi Konsultan</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
+                            <!-- Consultant cards would go here -->
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="consultations-tab">
+                        <h2 style="margin-bottom: 1.5rem;">Konsultasi Saya</h2>
+                        <!-- Consultation history would go here -->
+                    </div>
+                    
+                    <div class="tab-content" id="messages-tab">
+                        <h2 style="margin-bottom: 1.5rem;">Pesan</h2>
+                        <div class="chat-container">
+                            <div class="chat-header">
+                                <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Dian Pertiwi" class="chat-avatar">
+                                <div>
+                                    <div style="font-weight: 600;">Dian Pertiwi</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-light);">Konsultan Strategi Bisnis</div>
+                                </div>
+                            </div>
+                            <div class="chat-messages">
+                                <div class="message received">
+                                    <div class="message-content">
+                                        Halo Pak Ahmad, bagaimana perkembangan implementasi strategi pemasaran yang kita diskusikan minggu lalu?
+                                    </div>
+                                    <span class="message-time">10:30 AM</span>
+                                </div>
+                                <div class="message sent">
+                                    <div class="message-content">
+                                        Sudah mulai berjalan Bu. Kami sudah membuat konten sesuai jadwal yang direkomendasikan. Ada peningkatan traffic sekitar 20%.
+                                    </div>
+                                    <span class="message-time">10:35 AM</span>
+                                </div>
+                                <div class="message received">
+                                    <div class="message-content">
+                                        Bagus sekali! Kalau ada data analyticsnya bisa dibagikan untuk kita evaluasi lebih lanjut.
+                                    </div>
+                                    <span class="message-time">10:36 AM</span>
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" placeholder="Ketik pesan...">
+                                <button><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other tabs would go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-content">
+            <span class="close-search-modal">&times;</span>
+            <input type="text" class="search-modal-input" placeholder="Cari konsultan atau topik..." id="searchModalInput">
+            <div class="search-results" id="searchResults">
+                <!-- Results will be populated here by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Audio Element for Button Sounds -->
+    <audio id="buttonSound" src="https://github.com/LenteraKarya/Lentera-Karya/blob/main/assets/audio/audiotombol.mp3?raw=true"></audio>
+    
+    <script>
+        // [Semua JavaScript dari file asli tetap dipertahankan]
+        // Saya akan menambahkan beberapa fungsi khusus untuk fitur konsultasi
+        
+        // Consultant Modal Functionality
+        document.querySelectorAll('.view-profile, .book-consultant').forEach(button => {
+            button.addEventListener('click', function() {
+                const consultantId = this.dataset.consultant;
+                const consultantCard = this.closest('.consultant-card');
+                
+                // Get consultant data
+                const consultantName = consultantCard.querySelector('.consultant-name').textContent;
+                const consultantSpecialty = consultantCard.querySelector('.consultant-specialty').textContent;
+                const consultantRating = consultantCard.querySelector('.consultant-rating').textContent;
+                const consultantImage = consultantCard.querySelector('.consultant-image').src;
+                const consultantBio = consultantCard.querySelector('.consultant-bio').textContent;
+                
+                // Set modal data
+                document.getElementById('consultantModalName').textContent = consultantName;
+                document.getElementById('consultantModalSpecialty').textContent = consultantSpecialty;
+                document.getElementById('consultantModalRating').textContent = consultantRating;
+                document.getElementById('consultantAvatar').src = consultantImage;
+                document.getElementById('consultantBio').textContent = consultantBio;
+                
+                // If booking directly, open schedule tab
+                if (this.classList.contains('book-consultant')) {
+                    document.querySelector('.consultation-tab[data-tab="schedule"]').click();
+                }
+                
+                // Open modal
+                document.getElementById('consultationModal').classList.add('show');
+                document.body.style.overflow = 'hidden';
+                
+                playButtonSound();
+            });
+        });
+        
+        // Consultation Tabs
+        document.querySelectorAll('.consultation-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+                
+                // Update active tab
+                document.querySelectorAll('.consultation-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(tabId + '-tab').classList.add('active');
+                
+                playButtonSound();
+            });
+        });
+        
+        // Book Package
+        document.querySelectorAll('.book-package').forEach(button => {
+            button.addEventListener('click', function() {
+                const packageType = this.dataset.package;
+                document.querySelector('.consultation-tab[data-tab="schedule"]').click();
+                
+                playButtonSound();
+            });
+        });
+        
+        // Calendar Booking
+        function generateCalendar() {
+            const calendarGrid = document.querySelector('.calendar-grid');
+            const daysInMonth = 31; // January has 31 days
+            const firstDay = 3; // January 1, 2025 is Wednesday (0=Sun, 1=Mon, ..., 6=Sat)
+            
+            // Clear existing days except headers
+            while (calendarGrid.children.length > 7) {
+                calendarGrid.removeChild(calendarGrid.lastChild);
+            }
+            
+            // Add empty cells for days before the first day
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day disabled';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Mark today (for demo purposes)
+                if (day === new Date().getDate()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // Randomly mark some days as available
+                if (Math.random() > 0.3) {
+                    dayElement.addEventListener('click', function() {
+                        document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                        this.classList.add('selected');
+                        generateTimeSlots();
+                    });
+                } else {
+                    dayElement.classList.add('disabled');
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+        
+        function generateTimeSlots() {
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            timeSlotsContainer.innerHTML = '';
+            
+            const timeSlots = [
+                '08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'
+            ];
+            
+            timeSlots.forEach(time => {
+                const slot = document.createElement('div');
+                slot.className = 'time-slot';
+                slot.textContent = time;
+                
+                // Randomly mark some slots as booked
+                if (Math.random() > 0.7) {
+                    slot.classList.add('booked');
+                } else {
+                    slot.addEventListener('click', function() {
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        this.classList.add('selected');
+                    });
+                }
+                
+                timeSlotsContainer.appendChild(slot);
+            });
+        }
+        
+        // Initialize calendar
+        generateCalendar();
+        
+        // Navigation between months
+        document.getElementById('prevMonth').addEventListener('click', function() {
+            // In a real app, this would change the month
+            playButtonSound();
+        });
+        
+        document.getElementById('nextMonth').addEventListener('click', function() {
+            // In a real app, this would change the month
+            playButtonSound();
+        });
+        
+        // Confirm Booking
+        document.getElementById('confirmBooking').addEventListener('click', function() {
+            const selectedDay = document.querySelector('.calendar-day.selected');
+            const selectedTime = document.querySelector('.time-slot.selected');
+            
+            if (!selectedDay || !selectedTime) {
+                alert('Silakan pilih tanggal dan waktu konsultasi');
+                return;
+            }
+            
+            const date = `${selectedDay.textContent} Januari 2025`;
+            const time = selectedTime.textContent;
+            const notes = document.getElementById('consultationNotes').value;
+            
+            // In a real app, this would send the booking to the server
+            alert(`Booking berhasil!\n\nTanggal: ${date}\nWaktu: ${time}\nCatatan: ${notes || '-'}`);
+            
+            // Close modal
+            document.getElementById('consultationModal').classList.remove('show');
+            document.body.style.overflow = '';
+            
+            playButtonSound();
+        });
+        
+        // Login/Register Modal Toggle
+        document.getElementById('loginBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            playButtonSound();
+        });
+        
+        document.getElementById('registerBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            playButtonSound();
+        });
+        
+        document.getElementById('showRegister').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginModal').classList.remove('show');
+            document.getElementById('registerModal').classList.add('show');
+            playButtonSound();
+        });
+        
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerModal').classList.remove('show');
+            document.getElementById('loginModal').classList.add('show');
+            playButtonSound();
+        });
+        
+        // Quick Consultation Button
+        document.getElementById('quick-consultation').addEventListener('click', function() {
+            // In a real app, this would open a quick consultation form
+            document.getElementById('consultationModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            playButtonSound();
+        });
+        
+        // Login Form Submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate login
+            setTimeout(() => {
+                // Close login modal
+                document.getElementById('loginModal').classList.remove('show');
+                
+                // Open dashboard modal
+                document.getElementById('dashboardModal').classList.add('show');
+                
+                playButtonSound();
+            }, 1000);
+        });
+        
+        // Register Form Submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate registration
+            setTimeout(() => {
+                // Close register modal
+                document.getElementById('registerModal').classList.remove('show');
+                
+                // Open dashboard modal
+                document.getElementById('dashboardModal').classList.add('show');
+                
+                playButtonSound();
+            }, 1000);
+        });
+        
+        // Dashboard Tabs
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.dataset.tab;
+                
+                // Update active menu item
+                document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update active content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                
+                playButtonSound();
+            });
+        });
+        
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('dashboardModal').classList.remove('show');
+            document.body.style.overflow = '';
+            alert('Anda telah berhasil keluar');
+            playButtonSound();
+        });
+        
+        // Consultant Category Filtering
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                const consultantItems = document.querySelectorAll('.consultant-card');
+                
+                consultantItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category.includes(category)) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeInUp 0.6s forwards';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                playButtonSound();
+            });
+        });
+    </script>
+</body>
+</html>
